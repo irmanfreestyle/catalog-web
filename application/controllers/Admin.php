@@ -11,21 +11,48 @@ class Admin extends CI_Controller {
 
 	public function index()
 	{
-        $data['title'] = "ADMIN | Repository TE Unjani";
-        $data['page'] = 'DASHBOARD | REPOSITORY TE UNJANI';
+        $data['title'] = "ADMIN | Catalog App";
+        $data['page'] = 'LIST PRODUK';
         $data['content'] = "admin/dashboard";
         $this->db->order_by("tgl_upload", "desc");
-        $data['files'] = $this->db->get('files')->result();
-         
-
+        $data['products'] = $this->db->get('produk')->result();
+        $data['photos'] = $this->db->get('foto_produk');
+        
 		$this->load->view('admin/template', $data);	
     }	
     
     function uploadpage() {
-        $data['title'] = "Upload File | Repository TE Unjani";
-        $data['page'] = 'UPLOAD FILE | REPOSITORY TE UNJANI';
+        $data['title'] = "Upload Produk";
+        $data['page'] = 'UPLOAD PRODUK';
         $data['content'] = "admin/uploadpage";
+        $data['categories'] = $this->db->query('select * from kategori order by id_kategori desc')->result();
 		$this->load->view('admin/template', $data);	
+    }
+    
+
+    function category() {
+        $data['title'] = "Atur Kategori Produk";
+        $data['page'] = 'ATUR KATEGORI PRODUK';
+        $data['content'] = "admin/category";
+        $data['categories'] = $this->db->query('select * from kategori order by id_kategori desc')->result();
+		$this->load->view('admin/template', $data);	
+    }
+    function addCategory() {
+        $category = $this->input->post('category');
+        if($this->db->insert('kategori', ['id_kategori'=>'', 'nama_kategori'=>$category])) {
+            $this->session->set_flashdata('alert-category', 'success');            
+        } else {
+            $this->session->set_flashdata('alert-category', 'error');
+        }
+        redirect(base_url().'admin/category');
+    }
+    function deleteCategory($id) {
+        if($this->db->delete('kategori', ['id_kategori'=>$id])) {
+
+        } else {
+            $this->session->set_flashdata('alert-category', 'error');
+        }
+        redirect(base_url().'admin/category');
     }
 
     function changePasswordPage() {
@@ -75,22 +102,16 @@ class Admin extends CI_Controller {
         }
     }
 
-    function uploadFile() {
-        $type = $this->input->get('type');
-
+    function uploadFile() {        
         
-        $config['upload_path'] = 'assets/files/';
-        $config['allowed_types'] = '*';
+        $config['upload_path'] = 'assets/images/upload/';
+        $config['allowed_types'] = 'jpg|jpeg|png|gif';
         $config['max_size'] = 5000000;
         $config['encrypt_name'] = TRUE; 
-
-        if($type == 'image') {
-            $config['upload_path'] = 'assets/images/upload/';
-        }
-        		
+	
 		$this->load->library('upload', $config);
  
-		if ($this->upload->do_upload($type)){
+		if ($this->upload->do_upload('image')){
             $filename = $this->upload->data('file_name');            
             echo json_encode(['status'=>'success', 'filename'=>$filename]);
 		} else {
@@ -99,36 +120,31 @@ class Admin extends CI_Controller {
         }
     }
 
-    function uploadRepo() {
-        $id_repo = uniqid();     
+    function uploadProduct() {         
+        $photos = $this->input->post('image');
+        $id_produk = uniqid();
 
-        $dataRepo = [
-            'id_file' => $id_repo,
+        $dataProduct = [      
+            'id_produk' => $id_produk,
+            'nama_produk' => $this->input->post('namaproduk'),
+            'harga' => $this->input->post('harga'),
+            'stok' => $this->input->post('stok'),
             'kategori' => $this->input->post('kategori'),
-            'judul' => $this->input->post('judul'),
-            'pengarang' => $this->input->post('pengarang'),
-            'dosen_pembimbing' => $this->input->post('pembimbing'),
-            'kata_kunci' => $this->input->post('kata_kunci'),
-            'tahun_upload' => $this->input->post('tahun'),
-            'abstrak' => $this->input->post('abstrak'),
-            'gambar_file' => $this->input->post('gambar_file'),
+            'deskripsi' => $this->input->post('deskripsi'),
             'tgl_upload' => date("Y/m/d")
         ];            
                     
-        $this->db->insert('files', $dataRepo);
-        
-
-        if($this->db->affected_rows() > 0) {            
-            foreach($this->input->post('nama_file') as $idx=>$val) {
-                $this->db->insert('file_files', [
-                    'id_file' => $id_repo,
-                    'nama_file' => $this->input->post('nama_file')[$idx],
-                    'path' => $this->input->post('path')[$idx]
+        if($this->db->insert('produk', $dataProduct)) {
+            foreach($photos as $idx=>$photo) {
+                $this->db->insert('foto_produk', [
+                    'id_foto' => '',
+                    'id_produk' => $id_produk,
+                    'nama_foto' => $photos[$idx]
                 ]);
             }
-        }
+        }        
 
-        $this->session->set_flashdata('alert', 'success');
+        $this->session->set_flashdata('alert-product', 'success');
         redirect(base_url().'admin/uploadpage');
     }
 

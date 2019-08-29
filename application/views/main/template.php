@@ -14,7 +14,7 @@
 
   <body>
     <?php $this->load->view('main/navbar'); ?>
-    <div class="pt-5" style="min-height:100vh;background:#F5F5F5">
+    <div class="pt-5" style="background:#F5F5F5">
       <?php $this->load->view($content);  ?>
     </div>
     <?php $this->load->view('main/footer'); ?>

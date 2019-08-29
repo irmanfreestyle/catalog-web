@@ -1,6 +1,6 @@
-<div class="parallax-container">
+<div class="parallax-container" style="z-index:100">
     <div class="parallax">
-        <img src="http://needforgreen.co.uk/wp-content/uploads/2018/08/banner-bags.jpg">
+        <img src="<?=base_url()?>assets/images/default/banner-example.jpg">
     </div>
 </div>
 

@@ -1,17 +1,20 @@
+
+
+
 <div class="container" style="padding-top:20px;padding-bottom:20px;">
     <div class="row white" style="padding:10px;">
         <div class="col s12 m7">
-            <img class="materialboxed" width="100%" src="<?=base_url()?>assets/images/default/example.png" style="border:1px solid #ddd;">
+            <img class="materialboxed" width="100%" src="<?=base_url()?>assets/images/upload/<?=$photos[0]->nama_foto?>" style="border:1px solid #ddd;">
             <div class="image-collection d-flex my-scrollbar">
-                <?php for($i=0;$i<5;$i++): ?>
-                    <img src="<?=base_url()?>assets/images/default/example.png">
-                <?php endfor; ?>
+                <?php foreach($photos as $photo): ?>
+                    <img src="<?=base_url()?>assets/images/upload/<?=$photo->nama_foto?>">
+                <?php endforeach; ?>
             </div>
         </div>
         <div class="col s12 m5">
-            <h4 class="blue-grey-text" style="margin:5px 0;height:70px;">Black Shoes Special Edition</h4>
-            <h5 class="teal-text">Rp.100,000</h5>
-            <div class="blue-grey-text font-weight-bold" style="margin:15px 0;">Stok tersedia : 10</div>
+            <h4 class="blue-grey-text" style="margin:5px 0;height:70px;"><?=$produk->nama_produk?></h4>
+            <h5 class="teal-text">Rp.<?=number_format($produk->harga)?></h5>
+            <div class="blue-grey-text font-weight-bold" style="margin:15px 0;">Stok tersedia : <?=$produk->stok?></div>
             <div class="row" style="margin-bottom:0px;">
                 <div class="input-field col s6">                
                     <small style="margin-bottom:3px 0;">Kuantitas</small>
@@ -29,15 +32,10 @@
             <div>
                 <b class="blue-grey-text">Kategori</b>
                 <div class="d-flex flex-wrap" style="margin-top:5px;">                    
-                    <div class="chip white-text blue-grey">
-                        Tas Wanita
-                    </div>
-                    <div class="chip white-text blue-grey">
-                        Tas Pria
-                    </div>
-                    <div class="chip white-text blue-grey">
-                        Aksesoris
-                    </div>                    
+                    <div class="chip white-text blue-grey d-flex align-center">
+                        <i class="material-icons">loyalty</i>
+                        <?=$produk->kategori?>
+                    </div>                       
                 </div>
             </div>
         </div>                
@@ -51,7 +49,7 @@
                 Deskripsi Produk
             </h5>
                 <p class="">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                <?=$produk->deskripsi?>
                 </p>
         </div>
     </div>
@@ -63,11 +61,12 @@
                 Produk Terkait
             </h5>
         </div>
-        <?php for($i=0;$i<3;$i++): ?>
+        <?php foreach($similar_produk as $similar): ?>            
+            <?php $similary['produk'] = $similar ?>            
             <div class="col s12 m6 l4">                
-                <?php $this->load->view('main/components/productCard'); ?>            
+                <?php $this->load->view('main/components/productCard', $similary); ?>            
             </div>
-        <?php endfor; ?>   
+        <?php endforeach; ?>   
         <div class="col s12 text-center">
             <a class="waves-effect waves-dark btn rounded btn-outline teal-text rm-box-shadow">Tampilkan Selengkapnya</a>
             <br><br>

@@ -1,7 +1,7 @@
 <?php 
-  if(!$this->session->has_userdata('loged_in')) {
-    redirect(base_url().'admin/loginPage');
-  }
+  // if(!$this->session->has_userdata('loged_in')) {
+  //   redirect(base_url().'admin/loginPage');
+  // }
   
 ?>
 
@@ -50,7 +50,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>T</b>E</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>REPO</b> TE UNJANI</span>
+      <span class="logo-lg"><b>Admin</b>Admin</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -168,7 +168,7 @@
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <div class="box">
+          <div class="box box-danger">
             <div class="box-header">
               <h3 class="box-title"><?php echo $page; ?></h3>
             </div>
@@ -403,7 +403,7 @@
 <script src="<?= base_url(); ?>assets/sweetalert/dist/sweetalert2.all.min.js"></script>
 <script src="<?= base_url(); ?>assets/sweetalert/dist/sweetalert2.min.js"></script>
 
-<script src="<?= base_url(); ?>assets/js/main.js"></script>
+<script src="<?= base_url(); ?>assets/js/admin.js"></script>
 
 <!-- page script -->
 <script>
