@@ -36,11 +36,11 @@
         </div> 
         <div class="form-group">
             <label class="text-success">Harga Produk</label>
-            <input required type="number" class="form-control" placeholder="Rp.0" name="harga">
+            <input required type="number" min="0" class="form-control" placeholder="Rp.0" name="harga">
         </div> 
         <div class="form-group">
             <label class="text-success">Stok Tersedia</label>
-            <input required type="text" class="form-control" placeholder="Masukkan yang tersedia" name="stok">
+            <input required type="number" min="0" class="form-control" placeholder="Masukkan yang tersedia" name="stok">
         </div> 
         
 

@@ -25,9 +25,13 @@
                     <td><?=$product->deskripsi?></td>
                     <td><?=$product->tgl_upload?></td>
                     <td>
-                        <button class="btn btn-xs btn-danger" onclick="return confirm('yakin hapus <?=$product->nama_produk?>?')">Hapus</button> 
+                        <form action="<?=base_url()?>admin/deleteProduct/<?=$product->id_produk?>" style="display:inline-block;">
+                            <button class="btn btn-xs btn-danger" onclick="return confirm('yakin hapus <?=$product->nama_produk?>?')">Hapus</button> 
+                        </form>                        
                         <button class="btn btn-xs btn-success">Edit</button>
-                        <button class="btn btn-xs btn-primary">Lihat Produk</button>
+                        <a href="<?=base_url()?>product/<?=$product->id_produk?>">
+                            <button class="btn btn-xs btn-primary">Lihat Produk</button>
+                        </a>
                     </td>
                 </tr>
             <?php endforeach;?>

@@ -12,7 +12,7 @@
     </a>         
   </li>
   <li>
-    <a href="<?php echo base_url() ?>admin/uploadpage">
+    <a href="<?php echo base_url() ?>admin/socmed">
       <i class="fa fa-instagram	"></i>
       <span>Sosial Media</span>
     </a>         

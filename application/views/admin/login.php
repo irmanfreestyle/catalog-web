@@ -110,7 +110,7 @@
         <h2 class="login-header">Login admin</h2>
 
         <form class="login-container" method="post" action="<?=base_url()?>admin/login">            
-            <p><input type="password" autofocus placeholder="Masukan Password" name="password" required></p>
+            <p><input type="password" autofocus placeholder="Masukan Password" name="pass" required></p>
             <p><input type="submit" value="Log in"></p>
             <?php if(isset($_GET['password'])): ?>
                 <div style="background: orange;color:white;padding: 10px;">

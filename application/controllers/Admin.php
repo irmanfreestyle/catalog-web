@@ -3,14 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
 
-    function __construct() {
-        parent::__construct();
-        $this->load->helper(array('form', 'url'));
-        $this->load->model('Mdashboard');
-    }
+    // function __construct() {
+    //     parent::__construct();
+    //     $this->load->helper(array('form', 'url'));
+    //     $this->load->model('Mdashboard');
+    // }
 
 	public function index()
 	{
+        if(!$this->session->has_userdata('loged_in')) {
+            redirect(base_url().'admin/loginPage');
+        }
+        
         $data['title'] = "ADMIN | Catalog App";
         $data['page'] = 'LIST PRODUK';
         $data['content'] = "admin/dashboard";
@@ -55,11 +59,38 @@ class Admin extends CI_Controller {
         redirect(base_url().'admin/category');
     }
 
-    function changePasswordPage() {
-        $data['title'] = "Ubah Password | Repository TE Unjani";
-        $data['page'] = 'UBAH PASSWORD | REPOSITORY TE UNJANI';
-        $data['content'] = "admin/changePassword.php";
+    function deleteProduct($id) {
+		$this->db->delete('produk', ['id_produk' => $id]);
+		redirect(base_url().'admin');
+	}
+
+    function socmed() {
+        $data['title'] = "Sosial Media";
+        $data['page'] = 'SOSIAL MEDIA';
+        $data['content'] = "admin/socmed.php";
+        $data['socmeds'] = $this->db->get('socmed')->result();
 		$this->load->view('admin/template', $data);
+    }
+    function saveSocmed() {
+        $ig = $this->input->post('instagram');
+        $fb = $this->input->post('facebook');
+        $twitter = $this->input->post('twitter');
+        $tokped = $this->input->post('tokped');
+        $shopee = $this->input->post('shopee');
+
+        $show_ig = ($this->input->post('show_instagram')=='on') ? 1 : 0;
+        $show_fb = ($this->input->post('show_facebook')=='on') ? 1 : 0;
+        $show_twitter = ($this->input->post('show_twitter')=='on') ? 1 : 0;
+        $show_tokped = ($this->input->post('show_tokped')=='on') ? 1 : 0;
+        $show_shopee = ($this->input->post('show_shopee')=='on') ? 1 : 0;
+
+        $this->db->query("update socmed set link = '$ig', tampilkan = $show_ig where nama_socmed = 'instagram'");
+        $this->db->query("update socmed set link = '$fb', tampilkan = $show_fb where nama_socmed = 'facebook'");
+        $this->db->query("update socmed set link = '$twitter', tampilkan = $show_twitter where nama_socmed = 'twitter'");
+        $this->db->query("update socmed set link = '$tokped', tampilkan = $show_tokped where nama_socmed = 'tokped'");
+        $this->db->query("update socmed set link = '$shopee', tampilkan = $show_shopee where nama_socmed = 'shopee'");
+
+        redirect(base_url().'admin/socmed');
     }
 
 
@@ -69,9 +100,9 @@ class Admin extends CI_Controller {
     }
 
     function login() {
-        $password = $this->input->post('password');
-        $this->db->where('password', $password);
-        $check = $this->db->get('users');
+        $password = $this->input->post('pass');
+        $this->db->where('pass', $password);
+        $check = $this->db->get('admin');
         if($check->num_rows() > 0) {
             $this->session->set_userdata('loged_in', true);
             redirect(base_url().'admin/');
@@ -85,19 +116,24 @@ class Admin extends CI_Controller {
         redirect(base_url().'admin/loginPage');
     }
 
+    function changePasswordPage() {
+        $data['title'] = "Ubah Password";
+        $data['page'] = 'UBAH PASSWORD';
+        $data['content'] = "admin/changePassword.php";
+		$this->load->view('admin/template', $data);
+    }
     function changePassword() {
-        $oldPassword = $this->input->post('old-password');
-        $newPassword = $this->input->post('new-password');
-
-        $this->db->where('password', $oldPassword);
-        $res = $this->db->get('users');
+        $oldPassword = trim($this->input->post('old-password'));
+        $newPassword = trim($this->input->post('new-password'));        
+        
+        $res = $this->db->query("select * from admin where pass='$oldPassword'");
         
         if($res->num_rows() > 0) {
-            $this->db->update('users', ['password' => $newPassword]);
-            $this->session->set_flashdata('changePassword', 'Password Berhasil Dirubah');
+            $this->db->query("update admin set pass = '$newPassword'");
+            $this->session->set_flashdata('changePassword', 'success');
             redirect(base_url().'admin/changePasswordPage');
         } else {
-            $this->session->set_flashdata('changePassword', 'Password Lama Salah');
+            $this->session->set_flashdata('changePassword', 'error');
             redirect(base_url().'admin/changePasswordPage');
         }
     }

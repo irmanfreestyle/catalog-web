@@ -12,12 +12,20 @@
             <button class="btn btn-sm btn-success text-light" type="submit">Ubah</button>
         </div>
         
-        <?php if($this->session->flashdata('changePassword')): ?>
+        <?php if($this->session->flashdata('changePassword') == 'success'): ?>
             <div class="alert alert-info alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <h4>
                     <i class="icon fa fa-ban"></i>
-                    <?= $this->session->flashdata('changePassword'); ?>
+                    Berhasil ubah password
+                </h4>            
+            </div>
+        <?php elseif($this->session->flashdata('changePassword') == 'error'): ?>
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4>
+                    <i class="icon fa fa-ban"></i>
+                    Gagal ubah password, kemungkinan password lama salah
                 </h4>            
             </div>
         <?php endif; ?>

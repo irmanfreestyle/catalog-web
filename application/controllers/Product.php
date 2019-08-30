@@ -14,11 +14,12 @@ class Product extends CI_Controller {
 		$data['content'] = "main/detailProduct";
 		$data['produk'] = $this->db->query("select * from produk where id_produk = '$id_produk'")->result()[0];
 		$data['photos'] = $this->db->query("select * from foto_produk where id_produk = '$id_produk'")->result();
+
 		$kategori = $data['produk']->kategori;
-		$data['similar_produk'] = $this->db->query("select * from produk where not id_produk = '$id_produk'")->result_array();
+		$data['similar_produk'] = $this->db->query("select * from produk where not id_produk = '$id_produk' and kategori = '$kategori'")->result_array();
 				
 
 		$this->load->view('main/template', $data);
-	}	
+	}		
 
 }
