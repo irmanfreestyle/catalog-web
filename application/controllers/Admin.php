@@ -32,6 +32,53 @@ class Admin extends CI_Controller {
         $data['categories'] = $this->db->query('select * from kategori order by id_kategori desc')->result();
 		$this->load->view('admin/template', $data);	
     }
+    function editPage($id_produk) {
+        $data['id_produk'] = $id_produk;
+        $data['title'] = "Edit Produk";
+        $data['page'] = 'EDIT PRODUK';
+        $data['content'] = "admin/uploadpage";
+        $data['categories'] = $this->db->query('select * from kategori order by id_kategori desc')->result();
+        $data['product'] = $this->db->get_where('produk', ['id_produk' => $id_produk])->result()[0];
+        $data['photos'] = $this->db->get_where('foto_produk', ['id_produk' => $id_produk])->result();
+        $data['edit'] = true;
+
+		$this->load->view('admin/template', $data);	
+    }
+    function editProduct($id_produk) {
+        $photos = $this->input->post('image');
+
+        $dataProduct = [      
+            'id_produk' => $id_produk,
+            'nama_produk' => $this->input->post('namaproduk'),
+            'harga' => $this->input->post('harga'),
+            'stok' => $this->input->post('stok'),
+            'kategori' => $this->input->post('kategori'),
+            'deskripsi' => $this->input->post('deskripsi'),
+            'tgl_upload' => date("Y/m/d")
+        ];            
+        
+        $this->db->where('id_produk', $id_produk);
+        if($this->db->update('produk', $dataProduct)) {
+            foreach($photos as $photo) {                
+                if(!$this->db->query("select * from foto_produk where id_produk='$id_produk' and nama_foto='$photo'")->num_rows()) {
+                    $this->db->insert('foto_produk', [
+                        'id_foto' => '',
+                        'id_produk' => $id_produk,
+                        'nama_foto' => $photo
+                    ]);                    
+                }
+            }                      
+        }        
+
+        $this->session->set_flashdata('alert-product', 'success');
+        redirect(base_url().'admin/editPage/'.$id_produk);
+    }
+    function deletePhotoDb() {
+        $id_produk = $this->input->post('idproduk');
+        $nama_foto = $this->input->post('namafoto');
+        
+        $this->db->query("delete from foto_produk where id_produk = '$id_produk' and nama_foto='$nama_foto'");
+    }
     
 
     function category() {

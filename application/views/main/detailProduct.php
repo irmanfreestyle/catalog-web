@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="col s12 m5">
-            <h4 class="blue-grey-text" style="margin:5px 0;height:70px;"><?=$produk->nama_produk?></h4>
+            <h4 class="blue-grey-text" style="margin:5px 0;"><?=$produk->nama_produk?></h4>
             <h5 class="teal-text">Rp.<?=number_format($produk->harga)?></h5>
             <div class="blue-grey-text font-weight-bold" style="margin:15px 0;">Stok tersedia : <?=$produk->stok?></div>
             <div class="row" style="margin-bottom:0px;">

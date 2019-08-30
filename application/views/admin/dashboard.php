@@ -28,7 +28,9 @@
                         <form action="<?=base_url()?>admin/deleteProduct/<?=$product->id_produk?>" style="display:inline-block;">
                             <button class="btn btn-xs btn-danger" onclick="return confirm('yakin hapus <?=$product->nama_produk?>?')">Hapus</button> 
                         </form>                        
-                        <button class="btn btn-xs btn-success">Edit</button>
+                        <a href="<?=base_url()?>admin/editPage/<?=$product->id_produk?>">
+                            <button class="btn btn-xs btn-success">Edit</button>
+                        </a>
                         <a href="<?=base_url()?>product/<?=$product->id_produk?>">
                             <button class="btn btn-xs btn-primary">Lihat Produk</button>
                         </a>

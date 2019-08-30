@@ -52,6 +52,18 @@ $(document).on('DOMNodeInserted', function() {
     })
 })
 
+function deletePhotoDb(e, idproduk, namafoto) {
+    $.ajax({
+        url: base_url+'admin/deletePhotoDb',
+        type: 'post',
+        data: {idproduk, namafoto},
+        success: function(res) {
+            console.log(res)
+        }
+    })
+    $(e).parent().remove();
+}
+
 $("#addPhoto").click(function(e) {
     e.preventDefault();
     $(".parent-photos").append(`
