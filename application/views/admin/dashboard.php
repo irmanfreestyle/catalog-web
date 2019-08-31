@@ -19,7 +19,7 @@
                         <?=$i++?>
                     </td>                    
                     <td><?=$product->nama_produk?></td>
-                    <td><?=$product->harga?></td>
+                    <td>Rp.<?=number_format($product->harga)?></td>
                     <td><?=$product->stok?></td>
                     <td><?=$product->kategori?></td>
                     <td><?=$product->deskripsi?></td>

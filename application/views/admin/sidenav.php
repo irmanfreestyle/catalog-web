@@ -18,6 +18,12 @@
     </a>         
   </li>
   <li>
+    <a href="<?php echo base_url() ?>admin/custom">
+      <i class="fa fa-image"></i>
+      <span>Logo Toko</span>
+    </a>         
+  </li>
+  <li>
     <a href="<?php echo base_url() ?>admin/category">
       <i class="fa fa-tag"></i>
       <span>Atur kategori produk</span>

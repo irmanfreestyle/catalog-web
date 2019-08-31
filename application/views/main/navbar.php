@@ -2,15 +2,15 @@
   <nav class="white">
     <div class="nav-wrapper">
       <div class="container">
-        <a href="#" class="brand-logo">
-          <img src="https://banner2.kisspng.com/20171208/fed/shopping-logo-design-5a2a5304028563.0874963915127232040103.jpg" width="100px">
+        <a href="<?=base_url()?>" class="brand-logo center">
+          <img src="<?=base_url()?>assets/images/logo/<?=$logo?>" width="100px" height="65px">
         </a>
-        <a href="#" data-target="mobile-demo" class="sidenav-trigger blue-grey-text"><i class="material-icons">menu</i></a>
+        <!-- <a href="#" data-target="mobile-demo" class="sidenav-trigger blue-grey-text"><i class="material-icons">menu</i></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li><a href="sass.html" class="blue-grey-text">Home</a></li>        
           <li><a href="sass.html" class="blue-grey-text">Home</a></li>        
           <li><a href="sass.html" class="blue-grey-text">Home</a></li>        
-        </ul>
+        </ul> -->
       </div>
     </div>
   </nav>
@@ -20,4 +20,10 @@
     <li><a href="collapsible.html">Javascript</a></li>
     <li><a href="mobile.html">Mobile</a></li>
   </ul>
+</div>
+
+<div class="ssk-sticky ssk-left ssk-center ">
+    <?php foreach($socmeds as $socmed): ?>
+      <a target="_blank" href="<?=$socmed->link?>" class="ssk ssk-<?=$socmed->nama_socmed?>"></a>
+    <?php endforeach; ?>
 </div>

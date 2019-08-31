@@ -24,7 +24,7 @@
     <script type="text/javascript" src="<?=base_url()?>assets/materialize/js/materialize.min.js"></script>        
     
     <!-- Social Share Kit JS -->
-    <script type="text/javascript" src="<?=base_url()?>assets/js/social-share-kit.min.js"></script>
+    <script type="text/javascript" src="<?=base_url()?>assets/js/social-share-kit.min.js"></script>    
     <script src="<?=base_url()?>assets/js/main.js"></script>
   </body>
 </html>

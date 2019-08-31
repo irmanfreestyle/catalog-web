@@ -44,6 +44,41 @@ function uploadFile(e, baseUrl) {
     })
 }
 
+function uploadCustom(e, baseUrl, type) {
+    let image = new FormData();
+    image.append('image', e.files[0])      
+
+    let index = $('.file').index(e)
+        
+    if(e.files[0] === undefined) {
+        return false;
+    }
+    
+
+    $.ajax({
+        url: baseUrl+'admin/uploadCustom',
+        dataType: 'text',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: image,
+        type: 'post',
+        success: function(res) { 
+            res = JSON.parse(res)
+            if(res.status == 'success') {                                
+                $(".image-wrapper").eq(index)
+                .html('')
+                .append(`
+                    <img src="${baseUrl}assets/images/logo/${res.filename}" width="150" height="100">
+                    <input type="hidden" value="${res.filename}" name="${type}">
+                `)
+            } else {
+                alert('Terjadi Kesalahan '+res.error)
+            }       
+        }
+    })
+}
+
 
 
 $(document).on('DOMNodeInserted', function() {
@@ -77,3 +112,4 @@ $("#addPhoto").click(function(e) {
         </div>          
     `)
 })
+

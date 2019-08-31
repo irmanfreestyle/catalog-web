@@ -25,28 +25,27 @@
             <button class="btn btn-xs btn-success" id="addPhoto" style="margin:5px 0;">+ tambah foto</button>
             <div class="parent-photos" style="display:flex;flex-direction:column;width:400px;">
 
-            <?php if(isset($edit)):?>
-                <?php foreach($photos as $i=>$photo): ?>
-                    <div class="form-group" style="position:relative;display:inline-block;padding:10px;border:1px solid grey;">
-                        <!-- <label class="text-success" for="file">Pilih Foto</label> -->
-                        <input class="file" type="hidden" accept="image/*" required onchange="uploadFile(this, '<?=base_url()?>')">      
-                        <div class="image-wrapper" style="padding:5px 0px;">
-                            <img src="<?=base_url()?>assets/images/upload/<?=$photo->nama_foto?>" width="150" height="100">
-                            <input type="hidden" value="<?=$photo->nama_foto?>" name="image[]">
+                <?php if(isset($edit)):?>
+                    <?php foreach($photos as $i=>$photo): ?>
+                        <div class="form-group" style="position:relative;display:inline-block;padding:10px;border:1px solid grey;">
+                            <!-- <label class="text-success" for="file">Pilih Foto</label> -->
+                            <input class="file" type="hidden" accept="image/*" required onchange="uploadFile(this, '<?=base_url()?>')">      
+                            <div class="image-wrapper" style="padding:5px 0px;">
+                                <img src="<?=base_url()?>assets/images/upload/<?=$photo->nama_foto?>" width="150" height="100">
+                                <input type="hidden" value="<?=$photo->nama_foto?>" name="image[]">
+                            </div>
+                            <button onclick="deletePhotoDb(this, '<?=$product->id_produk?>', '<?=$photo->nama_foto?>')" class="btn btn-xs btn-danger delete-photo-db" type="button" style="position:absolute;top:0;right:0;">hapus</button>
                         </div>
-                        <button onclick="deletePhotoDb(this, '<?=$product->id_produk?>', '<?=$photo->nama_foto?>')" class="btn btn-xs btn-danger delete-photo-db" type="button" style="position:absolute;top:0;right:0;">hapus</button>
+                    <?php endforeach;?>
+                <?php else: ?>
+                    <div class="form-group" style="position:relative;display:inline-block;padding:10px;border:1px solid grey;">
+                        <label class="text-success" for="file">Pilih Foto</label>
+                        <input class="file" type="file" accept="image/*" required onchange="uploadFile(this, '<?=base_url()?>')">      
+                        <div class="image-wrapper" style="padding:5px 0px;">
+                            <!-- SUCCESS IMAGE UPLOAD SET HERE -->
+                        </div>               
                     </div>
-                <?php endforeach;?>
-            <?php else: ?>
-                <div class="form-group" style="position:relative;display:inline-block;padding:10px;border:1px solid grey;">
-                    <label class="text-success" for="file">Pilih Foto</label>
-                    <input class="file" type="file" accept="image/*" required onchange="uploadFile(this, '<?=base_url()?>')">      
-                    <div class="image-wrapper" style="padding:5px 0px;">
-                        <!-- SUCCESS IMAGE UPLOAD SET HERE -->
-                    </div>               
-                </div>
-            <?php endif;?>
-                           
+                <?php endif;?>         
             </div>
         </div>
 
@@ -62,17 +61,28 @@
             <label class="text-success">Stok Tersedia</label>
             <input required type="number" min="0" class="form-control" placeholder="Masukkan yang tersedia" name="stok" value="<?=isset($product)?$product->stok:''?>">
         </div> 
-        
-
-        <div class="form-group">
-            <label class="text-success">Pilih Kategori Produk</label>
-            <select class="form-control" name="kategori">
-                    <option value="" selected disabled>pilih kategori</option>
-                <?php foreach($categories as $category): ?>
-                    <option <?=$category->nama_kategori==$product->kategori?'selected':''?> value="<?=$category->nama_kategori?>"><?=$category->nama_kategori?></option>
-                <?php endforeach; ?>                
-            </select>
-        </div>
+            
+        <?php if(isset($edit)): ?>
+            <div class="form-group">
+                <label class="text-success">Pilih Kategori Produk</label>
+                <select class="form-control" name="kategori">
+                        <option value="" selected disabled>pilih kategori</option>
+                    <?php foreach($categories as $category): ?>
+                        <option <?=$category->nama_kategori==$product->kategori?'selected':''?> value="<?=$category->nama_kategori?>"><?=$category->nama_kategori?></option>
+                    <?php endforeach; ?>                
+                </select>
+            </div>
+        <?php else: ?>
+            <div class="form-group">
+                <label class="text-success">Pilih Kategori Produk</label>
+                <select class="form-control" name="kategori">
+                        <option value="" selected disabled>pilih kategori</option>
+                    <?php foreach($categories as $category): ?>
+                        <option value="<?=$category->nama_kategori?>"><?=$category->nama_kategori?></option>
+                    <?php endforeach; ?>                
+                </select>
+            </div>
+        <?php endif; ?>
         
         <div class="form-group">
             <label class="text-success">Deskripsi</label>

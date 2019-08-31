@@ -237,6 +237,45 @@ class Admin extends CI_Controller {
         $this->db->delete('files', ['id_file'=>$file_id]);
         redirect(base_url().'admin');
     }
+
+
+    function custom() {
+        $data['title'] = "Custom Logo & Banner";
+        $data['page'] = 'CUSTOM LOGO & BANNER TOKO';
+        $data['content'] = "admin/custom";
+		$this->load->view('admin/template', $data);
+    }
+    function uploadCustom() {        
+        
+        $config['upload_path'] = 'assets/images/logo/';
+        $config['allowed_types'] = 'jpg|jpeg|png|gif';
+        $config['max_size'] = 5000000;
+        $config['encrypt_name'] = TRUE; 
+	
+		$this->load->library('upload', $config);
+ 
+		if ($this->upload->do_upload('image')){
+            $filename = $this->upload->data('file_name');            
+            echo json_encode(['status'=>'success', 'filename'=>$filename]);
+		} else {
+            $error = array('error' => $this->upload->display_errors());
+            echo json_encode(['status'=>'failed', 'error'=>$error]);
+        }
+    }
+    function saveLogo() {
+        $logo = $this->input->post('logo');
+        $banner = $this->input->post('banner');
+
+        if(strlen($logo)) {
+            $this->db->query("update custom set nama_foto = '$logo' where type = 'logo'");
+        }        
+        if(strlen($banner)) {
+            $this->db->query("update custom set nama_foto = '$banner' where type = 'banner'");
+        }                        
+
+        $this->session->set_flashdata('alert-logo', 'success');
+        redirect(base_url().'admin/custom');
+    }
 	
 }
 

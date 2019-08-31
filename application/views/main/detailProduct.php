@@ -1,13 +1,11 @@
 
-
-
 <div class="container" style="padding-top:20px;padding-bottom:20px;">
     <div class="row white" style="padding:10px;">
         <div class="col s12 m7">
-            <img class="materialboxed" width="100%" src="<?=base_url()?>assets/images/upload/<?=$photos[0]->nama_foto?>" style="border:1px solid #ddd;">
+            <img class="materialboxed" id="primary-image" width="100%" src="<?=base_url()?>assets/images/upload/<?=$photos[0]->nama_foto?>" style="border:1px solid #ddd;">
             <div class="image-collection d-flex my-scrollbar">
-                <?php foreach($photos as $photo): ?>
-                    <img src="<?=base_url()?>assets/images/upload/<?=$photo->nama_foto?>">
+                <?php foreach($photos as $idx=>$photo): ?>
+                    <img onclick="changeImage('<?=$idx?>', '<?=base_url()?>assets/images/upload/<?=$photo->nama_foto?>')" src="<?=base_url()?>assets/images/upload/<?=$photo->nama_foto?>">
                 <?php endforeach; ?>
             </div>
         </div>
@@ -22,12 +20,7 @@
                 </div>
             </div>
             <a class="rm-box-shadow waves-effect waves-light btn capitalize">chat whatsapp & beli</a>                        
-            
-            <div class="ssk-sticky ssk-left ssk-center ">
-                <a href="" class="ssk ssk-facebook"></a>
-                <a href="" class="ssk ssk-instagram"></a>
-                <a href="" class="ssk ssk-twitter"></a>                                
-            </div>
+                        
             <br><br>
             <div>
                 <b class="blue-grey-text">Kategori</b>
@@ -58,18 +51,24 @@
             <h5 class="teal-text d-flex align-center">
                 <i class="material-icons">shopping_basket</i>
                 &nbsp;
-                Produk Terkait
+                Produk Terkait                
             </h5>
         </div>
-        <?php foreach($similar_produk as $similar): ?>            
-            <?php $similary['produk'] = $similar ?>            
-            <div class="col s12 m6 l4">                
-                <?php $this->load->view('main/components/productCard', $similary); ?>            
+        <?php if(count($similar_produk)): ?>
+            <?php foreach($similar_produk as $similar): ?>            
+                <?php $similary['produk'] = $similar ?>            
+                <div class="col s12 m6 l4">                          
+                    <?php $this->load->view('main/components/productCard', $similary); ?>            
+                </div>
+            <?php endforeach; ?>   
+            <div class="col s12 text-center">
+                <a class="waves-effect waves-dark btn rounded btn-outline teal-text rm-box-shadow">Tampilkan Selengkapnya</a>
+                <br><br>
             </div>
-        <?php endforeach; ?>   
-        <div class="col s12 text-center">
-            <a class="waves-effect waves-dark btn rounded btn-outline teal-text rm-box-shadow">Tampilkan Selengkapnya</a>
-            <br><br>
-        </div>
+        <?php else: ?>
+            <div class="col s12">
+                <p style="text-align:center;">Tidak ada produk terkait</p>
+            </div>
+        <?php endif; ?>        
     </div>
 </div>

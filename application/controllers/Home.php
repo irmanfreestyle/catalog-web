@@ -6,30 +6,45 @@ class Home extends CI_Controller {
 	public function index()
 	{		
 		$data['title'] = "Beranda | Catalog App";
-		$data['content'] = "main/home";
-		
-		// $this->db->order_by("tgl_upload", "desc");
-		// $data['files'] = $this->db->get('files')->result();
+		$data['content'] = "main/home";		
+		$data['logo'] = $this->db->query("select * from custom where type = 'logo'")->result()[0]->nama_foto;
+		$data['banner'] = $this->db->query("select * from custom where type = 'banner'")->result()[0]->nama_foto;		
+		$data['socmeds'] = $this->db->query("select * from socmed where tampilkan = 1")->result();		
 		
 		$this->load->view('main/template', $data);	
-	}	
+	}
 
+	function getCategories() {
+		$res = $this->db->get("kategori")->result();
+		echo json_encode($res);
+	}
 
-	// function search() {		
-	// 	$keyword = trim($this->input->get('keyword'));
-	// 	$data['title'] = 'Pencarian | Repository TE Unjani';
-	// 	$data['content'] = 'main/search';		
-	// 	$this->db->select('*');
-	// 	$this->db->from('files');
+	function getProducts($limit="") {
+		$category = $this->input->get('category');
+		$limit = ($limit != "") ? $limit : 10;
 
-	// 	$this->db->like('judul',urldecode(trim($keyword)));
-	// 	$this->db->or_like('kata_kunci',urldecode(trim($keyword)));
-	// 	$this->db->or_like('tahun_upload',urldecode(trim($keyword)));
-	// 	$this->db->or_like('pengarang',urldecode(trim($keyword)));
-	// 	$data['files'] = $this->db->get()->result();
+		$query = "select * from produk order by tgl_upload limit $limit";
+		if(strlen($category)) {
+			$query = "select * from produk where kategori = '$category' order by tgl_upload limit $limit";
+		}
 
+		$products = $this->db->query($query)->result();
+		$photos = $this->db->get('foto_produk')->result();
+		
+		foreach($products as $product) {
+			$product->foto_produk = [];
+		}
 
-	// 	$this->load->view('main/template', $data);	
-	// }
+		foreach($photos as $photo) {
+			foreach($products as $idx=>$product) {
+				if(($photo->id_produk == $product->id_produk)) {
+					if(!count($product->foto_produk)) {
+						$products[$idx]->foto_produk[0] = $photo;
+					}
+				}
+			}
+		}
+		echo json_encode($products);
+	}
 	
 }

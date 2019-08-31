@@ -130,3 +130,42 @@ input {
     border-color: orange!important;
     cursor: pointer;
 }
+.image-collection-active {
+    border-color: orange!important;
+    cursor: pointer;
+}
+
+
+
+
+.ssk {
+    transition: 0.3s!important;
+}
+.ssk:hover {
+    width: 50px!important;
+}
+.ssk-tokped {
+    background-image: url('../images/default/tokped.png')!important;    
+    background-size: 30px;    
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 36px;
+    height: 40px;
+}
+
+.ssk-shopee {
+    background-image: url('../images/default/shopee.png')!important;    
+    background-size: 30px;    
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 36px;
+    height: 40px;
+}
+
+
+.card {
+    transition: 0.3s!important;
+}
+.card:hover {
+    box-shadow: 1px 3px 6px rgba(0,0,0,0.4)!important;
+}
