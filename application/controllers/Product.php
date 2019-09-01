@@ -18,7 +18,7 @@ class Product extends CI_Controller {
 		$data['socmeds'] = $this->db->query("select * from socmed where tampilkan = 1")->result();
 
 		$kategori = $data['produk']->kategori;
-		$data['similar_produk'] = $this->db->query("select * from produk where not id_produk = '$id_produk' and kategori = '$kategori'")->result();
+		$data['similar_produk'] = $this->db->query("select * from produk where not id_produk = '$id_produk' and kategori = '$kategori' limit 3")->result();
 		
 		$data['all_photo'] = $this->db->get('foto_produk')->result();
 		

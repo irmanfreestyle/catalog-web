@@ -19,8 +19,8 @@ class Admin extends CI_Controller {
         $data['page'] = 'LIST PRODUK';
         $data['content'] = "admin/dashboard";
         $this->db->order_by("tgl_upload", "desc");
-        $data['products'] = $this->db->get('produk')->result();
-        $data['photos'] = $this->db->get('foto_produk');
+        $data['products'] = $this->db->query("select * from produk order by tgl_upload desc")->result();
+        $data['photos'] = $this->db->query("select * from foto_produk");
         
 		$this->load->view('admin/template', $data);	
     }	

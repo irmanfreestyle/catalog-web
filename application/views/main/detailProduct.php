@@ -16,10 +16,12 @@
             <div class="row" style="margin-bottom:0px;">
                 <div class="input-field col s6">                
                     <small style="margin-bottom:3px 0;">Kuantitas</small>
-                    <input type="number" class="validate" min="0" placeholder="0">                    
+                    <input type="number" class="validate" min="0" placeholder="0" id="kuantitas" value="">                    
                 </div>
             </div>
-            <a class="rm-box-shadow waves-effect waves-light btn capitalize">chat whatsapp & beli</a>                        
+            <a onclick="whatsapp('<?=$produk->nama_produk?>')">
+                <button class="rm-box-shadow waves-effect waves-light btn capitalize">chat whatsapp & beli</button>    
+            </a>        
                         
             <br><br>
             <div>
@@ -61,10 +63,10 @@
                     <?php $this->load->view('main/components/productCard', $similary); ?>            
                 </div>
             <?php endforeach; ?>   
-            <div class="col s12 text-center">
+            <!-- <div class="col s12 text-center">
                 <a class="waves-effect waves-dark btn rounded btn-outline teal-text rm-box-shadow">Tampilkan Selengkapnya</a>
                 <br><br>
-            </div>
+            </div> -->
         <?php else: ?>
             <div class="col s12">
                 <p style="text-align:center;">Tidak ada produk terkait</p>

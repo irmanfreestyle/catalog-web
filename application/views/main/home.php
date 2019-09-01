@@ -5,7 +5,7 @@
         <img src="<?=base_url()?>assets/images/logo/<?=$banner?>">
     </div>
 </div>
-<div class="container white">
+<div class="white" style="width: 1200px;margin:auto;max-width: 95%;">
     <div class="row">
         <div class="col s12">
             <h6 class="blue-grey-text">Kategori</h6>
